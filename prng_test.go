@@ -1,6 +1,10 @@
 package prng
 
-import "testing"
+import (
+	"fmt"
+	"math/rand"
+	"testing"
+)
 
 func TestPRNG(t *testing.T) {
 	cases := []struct {
@@ -50,4 +54,25 @@ func TestSeed(t *testing.T) {
 			t.Errorf("Seed(%x): expect PRNG{%x,%x}, got PRNG{%x,%x}\n", c.seed, c.state[0], c.state[1], got[0], got[1])
 		}
 	}
+}
+
+func ExamplePRNG() {
+	r := rand.New(new(PRNG))
+	r.Seed(0x0ddc0ffeebadf00d)
+
+	for i := 0; i < 10; i++ {
+		fmt.Println(r.Uint64())
+	}
+
+	// Output:
+	// 11814330020949985800
+	// 11817088786836023749
+	// 1654166990350674155
+	// 14112748191344281834
+	// 4288295283113472773
+	// 8391955421631067594
+	// 168274855724945977
+	// 2815117763357611551
+	// 12187186948608395331
+	// 10629044371437376348
 }
