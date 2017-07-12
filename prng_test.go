@@ -76,3 +76,22 @@ func ExamplePRNG() {
 	// 12187186948608395331
 	// 10629044371437376348
 }
+
+func benchmarkRandSource(s rand.Source, b *testing.B) {
+	r := rand.New(s)
+	r.Seed(0x0ddc0ffeebadf00d)
+
+	b.ResetTimer()
+	for n := 0; n < b.N; n++ {
+		r.Uint64()
+	}
+	b.SetBytes(8)
+}
+
+func BenchmarkPRNG(b *testing.B) {
+	benchmarkRandSource(new(PRNG), b)
+}
+
+func BenchmarkMathRand(b *testing.B) {
+	benchmarkRandSource(rand.NewSource(1), b)
+}
