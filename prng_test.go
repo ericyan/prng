@@ -33,3 +33,21 @@ func TestPRNG(t *testing.T) {
 		}
 	}
 }
+
+func TestSeed(t *testing.T) {
+	cases := []struct {
+		seed  int64
+		state [2]uint64
+	}{
+		{0xdeadbeef, [2]uint64{0x4adfb90f68c9eb9b, 0xde586a3141a10922}},
+		{0x0ddc0ffeebadf00d, [2]uint64{0x916df851e2aee44, 0x9ade0f09ffca1bc4}},
+	}
+
+	for _, c := range cases {
+		s := new(PRNG)
+		s.Seed(c.seed)
+		if got := s.state; got != c.state {
+			t.Errorf("Seed(%x): expect PRNG{%x,%x}, got PRNG{%x,%x}\n", c.seed, c.state[0], c.state[1], got[0], got[1])
+		}
+	}
+}
