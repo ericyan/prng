@@ -1,6 +1,8 @@
 // Package prng implements xoroshiro128+ pseudorandom number generators.
 package prng
 
+import "math/rand"
+
 // A PRNG is an instance of xoroshiro128+ generator.
 type PRNG struct {
 	state [2]uint64
@@ -8,7 +10,7 @@ type PRNG struct {
 
 // New creates and returns a new PRNG. The seed should be two unsigned
 // 64-bit integers and must not be everywhere zero.
-func New(seed [2]uint64) *PRNG {
+func New(seed [2]uint64) rand.Source64 {
 	return &PRNG{seed}
 }
 
