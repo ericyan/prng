@@ -1,7 +1,11 @@
 // Package prng implements xoroshiro128+ pseudorandom number generators.
 package prng
 
-import "math/rand"
+import (
+	"math/rand"
+
+	"github.com/ericyan/prng/internal/splitmix64"
+)
 
 // A PRNG is an instance of xoroshiro128+ generator.
 type PRNG struct {
@@ -19,12 +23,9 @@ func New(seed [2]uint64) rand.Source64 {
 // uses the outputs to initialize the xoroshiro128+ generator demanding
 // 128 bits of state.
 func (g *PRNG) Seed(seed int64) {
-	for i := 0; i < 2; i++ {
-		z := uint64(seed) + ((0x9e3779b97f4a7c15 * uint64(i+1)) & (1<<64 - 1))
-		z = (z ^ (z >> 30)) * 0xbf58476d1ce4e5b9
-		z = (z ^ (z >> 27)) * 0x94d049bb133111eb
-		g.state[i] = z ^ (z >> 31)
-	}
+	r := splitmix64.New(seed)
+
+	g.state[0], g.state[1] = r.Uint64(), r.Uint64()
 }
 
 // rotl rotates x to the left by k bit positions.
