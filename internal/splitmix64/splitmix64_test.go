@@ -22,6 +22,20 @@ func TestSplitMix64(t *testing.T) {
 				11408980392250668974,
 			},
 		},
+		{
+			0xdeadbeef,
+			[]uint64{
+				0x4adfb90f68c9eb9b,
+				0xde586a3141a10922,
+			},
+		},
+		{
+			0x0ddc0ffeebadf00d,
+			[]uint64{
+				0x916df851e2aee44,
+				0x9ade0f09ffca1bc4,
+			},
+		},
 	}
 	for _, c := range cases {
 		r := New(c.seed)
