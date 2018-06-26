@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestPRNG(t *testing.T) {
+func TestXoroshiro128Plus(t *testing.T) {
 	cases := []struct {
 		seed [2]uint64
 		nums []uint64
@@ -29,10 +29,10 @@ func TestPRNG(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		s := PRNG{c.seed}
+		s := NewXoroshiro128Plus(c.seed)
 		for i, n := range c.nums {
 			if got := s.Uint64(); got != n {
-				t.Errorf("PRNG{%d,%d}[%d]: expect %d, got %d\n", c.seed[0], c.seed[1], i, n, got)
+				t.Errorf("Xoroshiro128PlusPlus{%d,%d}[%d]: expect %d, got %d\n", c.seed[0], c.seed[1], i, n, got)
 			}
 		}
 	}
@@ -48,7 +48,7 @@ func TestSeed(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		s := new(PRNG)
+		s := new(Xoroshiro128Plus)
 		s.Seed(c.seed)
 		if got := s.state; got != c.state {
 			t.Errorf("Seed(%x): expect PRNG{%x,%x}, got PRNG{%x,%x}\n", c.seed, c.state[0], c.state[1], got[0], got[1])
@@ -57,7 +57,7 @@ func TestSeed(t *testing.T) {
 }
 
 func ExamplePRNG() {
-	r := rand.New(new(PRNG))
+	r := rand.New(new(Xoroshiro128Plus))
 	r.Seed(0x0ddc0ffeebadf00d)
 
 	for i := 0; i < 10; i++ {
@@ -75,23 +75,4 @@ func ExamplePRNG() {
 	// 2815117763357611551
 	// 12187186948608395331
 	// 10629044371437376348
-}
-
-func benchmarkRandSource(s rand.Source, b *testing.B) {
-	r := rand.New(s)
-	r.Seed(0x0ddc0ffeebadf00d)
-
-	b.ResetTimer()
-	for n := 0; n < b.N; n++ {
-		r.Uint64()
-	}
-	b.SetBytes(8)
-}
-
-func BenchmarkPRNG(b *testing.B) {
-	benchmarkRandSource(new(PRNG), b)
-}
-
-func BenchmarkMathRand(b *testing.B) {
-	benchmarkRandSource(rand.NewSource(1), b)
 }
