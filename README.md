@@ -7,7 +7,7 @@ default additive lagged fibonacci generator in the `math/rand` package.
 ## xoroshiro128+
 
 xoroshiro128+ (XOR/rotate/shift/rotate) is currently the fastest full
-cycle pseudorandom numbe generator passing the Big Crush tests without
+cycle pseudorandom number generator passing the Big Crush tests without
 systematic failures.
 
 It is designed by Sebastiano Vigna in collaboration with David Blackman.
