@@ -1,8 +1,10 @@
-package prng
+package prng_test
 
 import (
 	"math/rand"
 	"testing"
+
+	"github.com/ericyan/prng"
 )
 
 func benchmarkRandSource(s rand.Source, b *testing.B) {
@@ -17,7 +19,7 @@ func benchmarkRandSource(s rand.Source, b *testing.B) {
 }
 
 func BenchmarkXoroshiro128Plus(b *testing.B) {
-	benchmarkRandSource(new(Xoroshiro128Plus), b)
+	benchmarkRandSource(prng.NewXoroshiro128Plus(1), b)
 }
 
 func BenchmarkMathRand(b *testing.B) {

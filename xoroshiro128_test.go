@@ -42,10 +42,12 @@ func TestXoroshiro128Plus(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		s := NewXoroshiro128Plus(c.seed)
+		s := new(xoroshiro128Plus)
+		s[0], s[1] = c.seed[0], c.seed[1]
+
 		for i, n := range c.nums {
 			if got := s.Uint64(); got != n {
-				t.Errorf("Xoroshiro128PlusPlus{%d,%d}[%d]: expect %d, got %d\n", c.seed[0], c.seed[1], i, n, got)
+				t.Errorf("xoroshiro128+{%d,%d}[%d]: expect %d, got %d\n", c.seed[0], c.seed[1], i, n, got)
 			}
 		}
 	}
