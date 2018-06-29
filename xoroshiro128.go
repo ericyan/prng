@@ -34,8 +34,8 @@ func (s *xoroshiro128Plus) Uint64() uint64 {
 	result := s0 + s1
 
 	s1 ^= s0
-	s[0] = rotl(s0, 55) ^ s1 ^ (s1 << 14)
-	s[1] = rotl(s1, 36)
+	s[0] = rotl(s0, 24) ^ s1 ^ (s1 << 16)
+	s[1] = rotl(s1, 37)
 
 	return result
 }
