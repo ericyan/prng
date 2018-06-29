@@ -22,6 +22,10 @@ func BenchmarkXoroshiro128Plus(b *testing.B) {
 	benchmarkRandSource(prng.NewXoroshiro128Plus(1), b)
 }
 
+func BenchmarkXoroshiro128StarStar(b *testing.B) {
+	benchmarkRandSource(prng.NewXoroshiro128StarStar(1), b)
+}
+
 func BenchmarkMathRand(b *testing.B) {
 	benchmarkRandSource(rand.NewSource(1), b)
 }
