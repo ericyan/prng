@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/ericyan/prng"
+	"github.com/ericyan/prng/internal/splitmix64"
 )
 
 func benchmarkRandSource(s rand.Source, b *testing.B) {
@@ -24,6 +25,10 @@ func BenchmarkXoroshiro128Plus(b *testing.B) {
 
 func BenchmarkXoroshiro128StarStar(b *testing.B) {
 	benchmarkRandSource(prng.NewXoroshiro128StarStar(1), b)
+}
+
+func BenchmarkSplitMix64(b *testing.B) {
+	benchmarkRandSource(splitmix64.New(1), b)
 }
 
 func BenchmarkMathRand(b *testing.B) {
