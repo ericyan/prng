@@ -27,6 +27,13 @@ func BenchmarkXoroshiro128StarStar(b *testing.B) {
 	benchmarkRandSource(prng.NewXoroshiro128StarStar(1), b)
 }
 
+func BenchmarkXoshiro256Plus(b *testing.B) {
+	benchmarkRandSource(prng.NewXoshiro256Plus(1), b)
+}
+
+func BenchmarkXoshiro256StarStar(b *testing.B) {
+	benchmarkRandSource(prng.NewXoshiro256StarStar(1), b)
+}
 func BenchmarkSplitMix64(b *testing.B) {
 	benchmarkRandSource(splitmix64.New(1), b)
 }
