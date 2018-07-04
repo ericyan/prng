@@ -1,4 +1,3 @@
-// Package prng implements xoroshiro128+ pseudorandom number generators.
 package prng
 
 import (
